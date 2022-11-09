@@ -16,10 +16,13 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use OpenApi\Annotations as OA;
 
 class CustomerController extends AbstractController
 {
-
+    /** 
+     * Pour se connecter
+     */
     #[Route(path: '/token', name: 'app_login', methods: ['POST'])]
     public function login(Request $request): Response
     {
@@ -30,6 +33,16 @@ class CustomerController extends AbstractController
         return new JsonResponse(['login'=>$login, 'password'=>$password]);
     }
 
+    // /** 
+    //     *  @OA\Parameter(
+    //     *     name="Create user",
+    //     *     in="body",
+    //     *     @OA\JsonContent(type="object", @OA\Property(property="name", type="string"), @OA\Property(property="email", type="string"), @OA\Property(property="password", type="string"))
+    //     * )     
+    // */
+    /** 
+     * Ajoute un user
+     */
     #[Route('/api/customer/{id}/user', name: 'app_new_user', methods: ['POST'])]
     public function newUser($id, Request $request, EntityManagerInterface $em): Response
     {
@@ -39,7 +52,6 @@ class CustomerController extends AbstractController
         $user->setName($data['name']);
         $user->setEmail($data['email']);
         $user->setPassword($data['password']);
-        $user->setRoles($data['roles']);
         $user->setCustomer($customer);
         $em->persist($user);
         $em->flush();
@@ -49,6 +61,9 @@ class CustomerController extends AbstractController
         ]);
     }
 
+    /** 
+     * Détail chaque client
+     */
     #[Route('/api/customer/{id}', name: 'customer_index', methods: ['GET'])]
     public function findById(EntityManagerInterface $em,  SerializerInterface $serializer, $id): Response
     {
@@ -72,6 +87,10 @@ class CustomerController extends AbstractController
 
     }
 
+
+    /** 
+     * Montre tous les clients
+     */
     #[Route('/api/customers', name: 'customer_all', methods: ['GET'])]
     public function findAll(EntityManagerInterface $em, SerializerInterface $serializer): Response
     { 
@@ -96,6 +115,10 @@ class CustomerController extends AbstractController
 
     }
 
+
+    /** 
+     * Supprime client
+     */
     #[Route('/api/customers/{id}', name: 'customer_delete', methods: ['DELETE'])]
     public function delete(int $id, EntityManagerInterface $em): JsonResponse
     { 

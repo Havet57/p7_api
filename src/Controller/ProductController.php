@@ -45,6 +45,9 @@ class ProductController extends AbstractController
 
    
 
+    /** 
+     * détail chaque produit
+     */
     #[Route('/api/products/{id}', name: 'product_index', methods: ['GET'])]
     // Ce qui va suivre c'est plutôt la manière moderne d'écrire la route pour atteindre l'api
     #[OA\Tag(name:"products")]
