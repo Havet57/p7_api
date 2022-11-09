@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use OpenApi\Annotations as OA;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class CustomerController extends AbstractController
 {
@@ -44,20 +45,24 @@ class CustomerController extends AbstractController
      * Ajoute un user
      */
     #[Route('/api/customer/{id}/user', name: 'app_new_user', methods: ['POST'])]
-    public function newUser($id, Request $request, EntityManagerInterface $em): Response
+    public function newUser($id, Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $customer = $em->getRepository(customer::class)->find($id);
         $data = json_decode($request->getContent(), true);
         $user = new User;
         $user->setName($data['name']);
         $user->setEmail($data['email']);
-        $user->setPassword($data['password']);
+        $password = $userPasswordHasher->hashPassword($user, $data['password']);
+        $user->setPassword($password);
         $user->setCustomer($customer);
         $em->persist($user);
         $em->flush();
 
         return new JsonResponse([
-            'id'=>$user->getId()
+            'id'=>$user->getId(),
+            'name'=>$user->getName(),
+            'email'=>$user->getEmail(),
+            'password'=>$user->getPassword()
         ]);
     }
 
@@ -119,7 +124,7 @@ class CustomerController extends AbstractController
     /** 
      * Supprime client
      */
-    #[Route('/api/customers/{id}', name: 'customer_delete', methods: ['DELETE'])]
+    #[Route('/api/customer/{id}', name: 'customer_delete', methods: ['DELETE'])]
     public function delete(int $id, EntityManagerInterface $em): JsonResponse
     { 
         $customer = $em->getRepository(Customer::class)->find($id);
