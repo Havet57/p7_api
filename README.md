@@ -21,5 +21,6 @@ Then run this command line `mysql -uroot -p P7_api < database.sql` to create all
 
 ## Environment Variables
 
-To run this project, you must update the `config/database.json` with your database values (host, user, password, dbname).
+Please copy the `.env` file and paste to the `.env.local` file.
+To run this project, you must update the `DATABASE_URL` in the  `.env.local` file with your database values (host, user, password, dbname).
  
