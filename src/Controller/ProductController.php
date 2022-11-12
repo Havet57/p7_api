@@ -20,13 +20,13 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class ProductController extends AbstractController
 {
     /**
-     * List all products.
+     * Montre tous les produits.
      *
      *
      * @Route("/api/products", methods={"GET"})
      * @OA\Response(
      *     response=200,
-     *     description="Returns all products",
+     *     description="Montre tous les produits",
      *     @OA\JsonContent(
      *        type="array",
      *        @OA\Items(ref=@Model(type=Product::class, groups={"full"}))
@@ -47,9 +47,9 @@ class ProductController extends AbstractController
 
     /** 
      * détail chaque produit
+     * @OA\Tag(name="products")
      */
     #[Route('/api/products/{id}', name: 'product_index', methods: ['GET'])]
-    // Ce qui va suivre c'est plutôt la manière moderne d'écrire la route pour atteindre l'api
     #[OA\Tag(name:"products")]
     public function findById(EntityManagerInterface $em,  SerializerInterface $serializer, $id): Response
     {

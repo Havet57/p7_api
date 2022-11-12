@@ -34,13 +34,7 @@ class CustomerController extends AbstractController
         return new JsonResponse(['login'=>$login, 'password'=>$password]);
     }
 
-    // /** 
-    //     *  @OA\Parameter(
-    //     *     name="Create user",
-    //     *     in="body",
-    //     *     @OA\JsonContent(type="object", @OA\Property(property="name", type="string"), @OA\Property(property="email", type="string"), @OA\Property(property="password", type="string"))
-    //     * )     
-    // */
+
     /** 
      * Ajoute un user
      */
@@ -121,19 +115,8 @@ class CustomerController extends AbstractController
     }
 
 
-    /** 
-     * Supprime client
-     */
-    #[Route('/api/customer/{id}', name: 'customer_delete', methods: ['DELETE'])]
-    public function delete(int $id, EntityManagerInterface $em): JsonResponse
-    { 
-        $customer = $em->getRepository(Customer::class)->find($id);
-        $em->remove($customer);
-        $em->flush();
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
 
-    }
 
 
 }
