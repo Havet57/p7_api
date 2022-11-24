@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 09 nov. 2022 à 19:05
+-- Généré le : jeu. 24 nov. 2022 à 18:33
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.2
 
@@ -40,10 +40,9 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `email`, `roles`, `password`, `name`) VALUES
-(1, 'sfrr@phoneapi.com', '[]', '$2y$13$jlEFYiJdVAaLjrT7PZXSTuBcW7k5mvtYH2KyWQDk.KvwLoAtAWEbG', 'Sfrr'),
-(2, 'bouyguo@phoneapi.com', '[]', '$2y$13$RpWl5QRSuC57POfExEiLou4lh5QjLxYL2UDAjtOiB8KvD4AHCFWZy', 'Bouyguo'),
-(3, 'fraa@phoneapi.com', '[]', '$2y$13$nkzEWVC.tRB2i7Mo6csdrOe1GwmyXg9Y7nydLddr4hFcq/kHIZ9tO', 'fraa'),
-(4, 'sitch@phoneapi.com', '[]', '$2y$13$2eTGw5CpGMlDlXXK8OP3k./PZ6k9wZ7ItU4YA9voA/LRlI3b7ARrm', 'sitch');
+(1, 'sfrr@phoneapi.com', '[]', '$2y$13$JNMUHKGUmaW7e81DXqkike.sR8XyOsPYQUI.h1hMLGkWAF3hPBlXq', 'Sfrr'),
+(2, 'bouyguo@phoneapi.com', '[]', '$2y$13$TNbSquWH.we9f6OKBqcHC.jI9ekBMextC1y3Sx0aZYMxUJpWE01QC', 'Bouyguo'),
+(4, 'sitch@phoneapi.com', '[]', '$2y$13$2kd7IJIXU6ddRvx2r/mbxOUjdO53G/sQ5PURXtZAAntmp/jsZdh8G', 'sitch');
 
 -- --------------------------------------------------------
 
@@ -74,7 +73,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`) VALUES
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
   `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
   `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`roles`)),
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -86,9 +85,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `customer_id`, `email`, `roles`, `password`, `name`) VALUES
-(1, 1, 'jeanlouis@hotmail.fr', '[]', '$2y$13$gmKohSjcpVQpoSCnm4.3lOcIDVCoA98CFJloKyMN8ao51FaRDbEqS', 'Jean louis'),
-(2, 2, 'kevin@hotmail.fr', '[]', '$2y$13$MkUIhH0GivzQAi48N3LEmuPbwu5ol875FQWPTqRmIsVj1ZmVzWTmS', 'Kevin'),
-(3, 3, 'laura@gmail.com', '[]', 'laura12345', 'laura');
+(1, 1, 'jeanlouis@hotmail.fr', '[]', '$2y$13$//R6EGcD1so4zAojl.5lG.m6AooU0.np1Exw1ahdyxckFd1.rAPf2', 'Jean louis'),
+(2, 2, 'kevin@hotmail.fr', '[]', '$2y$13$R.2GlZPugVzWrVBZ0PW0EeJr4AyNRWQmrvHPgGCYVY4m9ld2lyCUm', 'Kevin');
 
 --
 -- Index pour les tables déchargées
