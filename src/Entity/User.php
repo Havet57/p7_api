@@ -30,7 +30,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users', cascade:["remove"])]
+
+
+    #[ORM\ManyToOne(inversedBy: 'user', cascade:["remove"])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Customer $customer = null;
 

@@ -103,8 +103,9 @@ class CustomerController extends AbstractController
         // Serialize your object in Json
         $customers = $em->getRepository(Customer::class)->findAll();
         $jsonObject = $serializer->serialize($customers, 'json', [
-           'circular_reference_handler' => function ($object) {
-            return $object->getId(); //je ne comprends pas cette ligne
+           'circular_reference_handler' => function ($object) 
+           {
+            return $object->getId(); 
             }
         ]);
 
