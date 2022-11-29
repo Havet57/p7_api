@@ -24,14 +24,10 @@ class UserController extends AbstractController
     public function findAll(EntityManagerInterface $em, SerializerInterface $serializer): Response
     {
 
-
-        // Tip : Inject SerializerInterface $serializer in the controller method
-        // and avoid these 3 lines of instanciation/configuration
-        $encoders = [new JsonEncoder()]; // If no need for XmlEncoder
+        $encoders = [new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        // Serialize your object in Json
         $users = $em->getRepository(User::class)->findAll();
         $jsonObject = $serializer->serialize($users, 'json', [
             'circular_reference_handler' => function ($object) {
@@ -39,7 +35,7 @@ class UserController extends AbstractController
             }
         ]);
 
-        // For instance, return a Response with encoded Json
+ 
         return new Response($jsonObject, 200, ['Content-Type' => 'application/json']);
     }
 
@@ -50,13 +46,10 @@ class UserController extends AbstractController
     public function findById(EntityManagerInterface $em,  SerializerInterface $serializer, $id): Response
     {
 
-        // Tip : Inject SerializerInterface $serializer in the controller method
-        // and avoid these 3 lines of instanciation/configuration
-        $encoders = [new JsonEncoder()]; // If no need for XmlEncoder
+        $encoders = [new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        // Serialize your object in Json
         $users = $em->getRepository(User::class)->find($id);
         $jsonObject = $serializer->serialize($users, 'json', [
            'circular_reference_handler' => function ($object) {
@@ -64,7 +57,6 @@ class UserController extends AbstractController
             }
         ]);
 
-        // For instance, return a Response with encoded Json
         return new Response($jsonObject, 200, ['Content-Type' => 'application/json']);
 
     }
